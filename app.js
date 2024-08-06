@@ -5,6 +5,7 @@ const PORT = 5000;
 const cors = require("cors");
 
 app.use(cors());
+
 // db Connection
 const dbConnection = require("./db/dbConfig.js");
 
@@ -31,7 +32,7 @@ async function start() {
     const result = await dbConnection.execute("select 'test' ");
     await app.listen(PORT);
     console.log("Database connection established");
-    console.log(`listening on ${PORT}`);
+    console.log(`Listening on ${PORT}`);
   } catch (error) {
     console.log(error.message);
   }
