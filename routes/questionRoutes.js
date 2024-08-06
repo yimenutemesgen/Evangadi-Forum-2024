@@ -4,11 +4,15 @@ const router = express.Router();
 // Import the functions (logics) related to questions from the questionController module
 const {
   getSingleQuestion,
-  postNewQuestion
+  postNewQuestion,
+  getAllQuestions
 } = require("../controller/questionsController.js");
 
 // Route for fetching a single question.
 router.get("/:question_id", getSingleQuestion);
+  // Route for fetching all questions.
+router.get("/", getAllQuestions);
+
 
 // Route for creating a new question.
 router.post("/", postNewQuestion);
