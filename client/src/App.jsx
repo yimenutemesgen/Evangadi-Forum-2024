@@ -4,12 +4,14 @@ import Landing from "./Pages/Landing/Landing";
 import Login from "./Pages/user/Login";
 import Question1 from "./Pages/Question/Question1";
 import SingleQuestion from "./Pages/Answer/SingleQuestion";
-import SignUp from "./Pages/user/SignUp";
 import { axiosBase } from "./Api/axiosConfig";
 import { DataContext } from "./Component/DataProvider/DataProvider";
 import { Type } from "./utility/actiontype";
 import ProtectedRoute from "./Component/protectedRoute";
 import Home from "./Pages/Home/Home";
+import HowItWorks from "./Pages/FooterLinks/HowItworks/HowItWorks";
+import PrivacyPolicy from "./Pages/FooterLinks/PrivacyPolicy/PrivacyPolicy";
+import TermsofService from "./Pages/FooterLinks/TermsAndCondtion/TermsofService";
 
 function App() {
   const [, dispatch] = useContext(DataContext);
@@ -49,18 +51,23 @@ function App() {
       <Routes>
         {/* Public Route */}
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/termsOfService" element={<TermsofService />} />
 
         {/* Protected Routes */}
+
         <Route
-          path="/home"
+          path="/landing"
           element={
             <ProtectedRoute token={token}>
               <Landing />
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<SignUp />} />
+
         <Route
           path="/question"
           element={

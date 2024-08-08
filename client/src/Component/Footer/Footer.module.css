@@ -10,13 +10,6 @@
       padding: 60px 0 40px 0;
     background-color: #3b455a;
 }
-/* .footer__container {
-  background-color: #3b455a;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 60px;
-} */
 
 .footer__brand > img {
   width: 200px;
@@ -74,10 +67,16 @@
   text-decoration: none;
 }
 
-.footer__links a:hover,
+.footer__links div div a:hover{
+  color: #fff;
+  text-decoration: underline;
+}
 .footer__info a:hover {
   color: #fff;
   text-decoration: underline;
+}
+.footer__info ul li div{
+  color: rgba(213, 213, 213, 0.6);
 }
 @media (max-width:580px) {
   .social__Container {

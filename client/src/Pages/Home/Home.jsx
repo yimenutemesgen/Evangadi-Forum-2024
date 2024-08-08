@@ -1,10 +1,10 @@
-
-import React from 'react'
-import classes from "./home.module.css";
-import logo from "../../Asset/image/evangadi-logo-home.png"
-import img from "../../Asset/image/newpic.jpg";
+import Layout from "../../Component/Layout/LoginLayout";
+import Footer from "../../Component/Footer/Footer";
 import { Link } from "react-router-dom";
-import Footer from "../../Footer/Footer";
+import React from "react";
+import classes from "./home.module.css";
+import logo from "../../Asset/image/evangadi-logo-home.png";
+import img from "../../Asset/image/newpic.jpg";
 const Home = () => {
   return (
     <>
@@ -48,11 +48,10 @@ const Home = () => {
           alt=""
           className={`${classes.feature_img} ${classes.anim}`}
         />
-        <div className={classes.lower_wrapper}></div>
       </div>
       <Footer />
     </>
   );
-}
+};
 
-export default Home
+export default Home;

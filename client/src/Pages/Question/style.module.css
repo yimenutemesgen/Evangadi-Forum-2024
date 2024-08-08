@@ -1,5 +1,6 @@
 .questionSection_wrapper {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 7%;
   margin-bottom: 3%;
 }
 .title__wrapper {
@@ -76,6 +77,9 @@ button {
 }
 
 @media (max-width: 768px) {
+  .questionSection_wrapper {
+    margin-top: 14%;
+  }
   .title__wrapper {
     padding: 3% 8%;
   }
@@ -98,5 +102,10 @@ button {
   }
   .answerForm textarea {
     width: 96%;
+  }
+}
+@media (max-width: 426px) {
+  .questionSection_wrapper {
+    margin-top: 34%;
   }
 }

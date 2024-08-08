@@ -39,7 +39,7 @@ const Header = () => {
             <div>
               <Link
                 style={{ textDecoration: "none", color: "rgb(34, 33, 33)" }}
-                to={"/home"}
+                to={"/landing"}
               >
                 Home
               </Link>

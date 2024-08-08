@@ -56,6 +56,9 @@
   font-family: "Poppins", sans-serif;
   background-color: white;
 }
+.signup__Description_orange button :hover{
+  color: white;
+}
 .signIn_Wrapper h6 {
   font-family: "Poppins", sans-serif;
   font-weight: bold;
@@ -139,6 +142,7 @@
   color: #344767;
 }
 .about__title h1 {
+  font-size: 35px;
   font-family: "Poppins", sans-serif;
   font-weight: bolder;
   margin-bottom: 10px;
@@ -185,7 +189,18 @@
 .signup_wrapper.active {
   display: block;
 }
+.last_containerWrapper{
+  
+    background-color: #fe8402;
+    padding: 7px 35px;
+    width: 195px;
+    border-radius: 6%;
+}
 
+.last_containerWrapper a{
+  text-decoration: none;
+  color: white;
+}
 @media (max-width: 768px) {
   .login__about {
     display: none;

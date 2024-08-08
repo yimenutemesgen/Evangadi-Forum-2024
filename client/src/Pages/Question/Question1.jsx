@@ -49,7 +49,11 @@ function Question1() {
           title,
           description: question,
         },
-  
+        {
+          // headers: {
+          //   Authorization: `Bearer ${state.token}`, // Use token from state
+          // },
+        }
       );
       console.log(result);
       setSuccess(true);
@@ -57,7 +61,7 @@ function Question1() {
       // Handle successful post
       // Redirect to home page
       setTimeout(() => {
-        navigate("/login");
+        navigate("/landing");
       }, 2000); // Redirect after 2 seconds to allow the success message to be seen
     } catch (error) {
       alert(error?.response?.data?.msg || "An error occurred.");

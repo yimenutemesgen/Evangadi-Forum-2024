@@ -9,8 +9,6 @@ import Rowlist from "./Rowlist";
 import { MdOutlineSearch } from "react-icons/md";
 import GridLoader from "react-spinners/GridLoader";
 
-
-
 const Landing = () => {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -82,7 +80,7 @@ const Landing = () => {
                 <div>
                   Welcome:
                   <span style={{ color: "red", paddingLeft: "10px" }}>
-                    {user ? user.Username : "Guest"}
+                    {user ? user.username : "Guest"}
                   </span>
                 </div>
               </b>
@@ -110,3 +108,4 @@ const Landing = () => {
 };
 
 export default Landing;
+

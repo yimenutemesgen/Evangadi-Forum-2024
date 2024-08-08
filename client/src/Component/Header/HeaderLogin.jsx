@@ -7,11 +7,17 @@ import logo from "../../Asset/image/evangadi-logo-home.png";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [state, dispatch] = useContext(DataContext);
+  
+  const [state] = useContext(DataContext);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for toggle effect
-
+  
+  
+  // Determine the home link based on user authentication
+  const homeLink = state?.User?.username ? "/" : "/landing";
  
+ 
+  console.log(state.user);
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev); // Toggle menu open/close
   };
@@ -32,7 +38,7 @@ const Header = () => {
             <div>
               <Link
                 style={{ textDecoration: "none", color: "rgb(34, 33, 33)" }}
-                to={"/"}
+                to={homeLink}
               >
                 Home
               </Link>
@@ -43,13 +49,11 @@ const Header = () => {
             >
               How it works
             </Link>
-           
-            <Link
-              type="button"
-              to={"/login"}  
-            >
-              <b>SIGN IN</b>
-            </Link>
+            <div className={classes.login_wrapper}>
+              <Link type="button" to={"/login"}>
+                <b>SIGN IN</b>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

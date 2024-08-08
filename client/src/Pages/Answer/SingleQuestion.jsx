@@ -23,31 +23,24 @@ const SingleQuestion = () => {
     const fetchQuestionAndAnswers = async () => {
       setLoading(true);
       try {
-        // Fetch question first
+        // Fetch question
         const questionResponse = await axiosBase.get(
           `/question/${question_id}`
         );
         setQuestion(questionResponse.data.question);
 
-        try {
-          // Fetch answers
-          const answersResponse = await axiosBase.get(`/answer/${question_id}`);
-          dispatch({
-            type: Type.SET_ANSWERS,
-            answers: answersResponse.data.answers,
-          });
-        } catch (answersError) {
-          console.error(
-            "Error fetching answers:",
-            answersError.response?.data || answersError.message
-          );
-          dispatch({ type: Type.CLEAR_ANSWERS });
-        }
-      } catch (questionError) {
+        // Fetch answers
+        const answersResponse = await axiosBase.get(`/answer/${question_id}`);
+        dispatch({
+          type: Type.SET_ANSWERS,
+          answers: answersResponse.data.answers,
+        });
+      } catch (error) {
         console.error(
-          "Error fetching question:",
-          questionError.response?.data || questionError.message
+          "Error fetching data:",
+          error.response?.data || error.message
         );
+        dispatch({ type: Type.CLEAR_ANSWERS });
       } finally {
         setLoading(false);
       }
@@ -62,7 +55,7 @@ const SingleQuestion = () => {
     const answerContent = answerDome.current.value.trim();
 
     if (!answerContent) {
-      answerDome.current.style.border = "2px solid red";
+      answerDome.current.style.backgroundColor = "#f8d7da"; // Set background color for error
       return;
     }
 
@@ -76,12 +69,13 @@ const SingleQuestion = () => {
         question_id: result.data.question_id,
         answer_id: result.data.answerId,
         content: answerContent,
-        user_name: state.user.Username,
+        user_name: state.user.username,
         created_at: new Date().toISOString(),
       };
 
       dispatch({ type: Type.ADD_ANSWER, answer: newAnswer });
       answerDome.current.value = "";
+      answerDome.current.style.backgroundColor = ""; // Reset background color
       setSuccess(true);
 
       if (messageTimeout) clearTimeout(messageTimeout);
@@ -100,6 +94,7 @@ const SingleQuestion = () => {
   useEffect(() => {
     return () => {
       if (messageTimeout) clearTimeout(messageTimeout);
+      setSuccess(false); // Reset success state on unmount
     };
   }, [messageTimeout]);
 

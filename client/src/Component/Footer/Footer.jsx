@@ -45,7 +45,9 @@ const Footer = () => {
             </div>
             <div className="col-md-4">
               <div className="footer_links">
-                <h3 style={{ color: "#fff",fontSize:"18px" }}>Useful links</h3>
+                <h3 style={{ color: "#fff", fontSize: "18px" }}>
+                  Useful links
+                </h3>
                 <div>
                   <div>
                     <Link
@@ -53,7 +55,7 @@ const Footer = () => {
                         textDecoration: "none",
                         color: "rgba(213, 213, 213, 0.6)",
                       }}
-                      to="/"
+                      to="/how-it-works"
                     >
                       How it works
                     </Link>
@@ -64,7 +66,7 @@ const Footer = () => {
                         textDecoration: "none",
                         color: "rgba(213, 213, 213, 0.6)",
                       }}
-                      to="/"
+                      to="/termsOfService"
                     >
                       Terms of service
                     </Link>
@@ -75,7 +77,7 @@ const Footer = () => {
                         textDecoration: "none",
                         color: "rgba(213, 213, 213, 0.6)",
                       }}
-                      to="/"
+                      to="/privacyPolicy"
                     >
                       Privacy policy
                     </Link>
@@ -88,13 +90,15 @@ const Footer = () => {
                 <h2>Contact Info</h2>
                 <ul>
                   <li>
-                    <Link to="/">Evangadi Networks</Link>
+                    <Link to="https://www.evangadi.com/">
+                      Evangadi Networks
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/">support@evangadi.com</Link>
+                    <div>support@evangadi.com</div>
                   </li>
                   <li>
-                    <Link to="/">+1202386-2702</Link>
+                    <div>+1202386-2702</div>
                   </li>
                 </ul>
               </div>

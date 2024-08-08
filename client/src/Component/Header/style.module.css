@@ -1,19 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300&display=swap");
 
-/* * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  
-} */
-/* Basic styles */
-/* Base styles for the header section */
-/* Base styling for the header section */
 .section__wrapper {
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(81, 107, 152, 0.16);
-  z-index: 1;
-  background-color: #fff;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(81, 107, 152, 0.16);
+    z-index: 1;
+    background-color: #fff;
+    padding: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
 }
 
 /* Container for the header content */
@@ -104,10 +99,22 @@
   .menuItems.open {
     display: flex;
     left: 0;
-    width: 33%;
+    width: 50%;
   }
 }
-
+.login_wrapper{
+  border: 1px solid none;
+  background-color: #596DE5;
+  padding: 5px 25px;
+  border-radius: 6%;
+}
+.login_wrapper a{
+  text-decoration: none;
+  color: white;
+}
+.login_wrapper:hover{
+  background-color: #fd911e;
+}
 /* Additional styling for very small screens */
 @media (max-width: 425px) {
   .menuItems.open {
