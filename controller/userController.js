@@ -130,22 +130,6 @@ async function checkUser(req, res) {
   }
 }
 
-// // User logout function for Authenticated user
-async function logout(req, res){
-  try {
-    // Remove the JWT of user from the request header
-    req.headers.authorization = null;
-    // Return a 200 OK response with a success message
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "Logged out successfully" });
-  } catch (error) {
-    // Return a 500 internal server error response if an error occurs
-    console.log(error.message);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "An unexpected error occurred!" });
-  }
-};
-
 /************************************************************************************** */
 /******************************resetPassword*********************************************/
 /************************************************************************************** */
@@ -218,4 +202,4 @@ async function resetPassword(req, res) {
   }
 }
 
-module.exports = { register, login, checkUser, logout, resetPassword };
+module.exports = { register, login, checkUser, resetPassword };
