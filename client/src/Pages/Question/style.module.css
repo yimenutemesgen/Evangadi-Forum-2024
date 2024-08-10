@@ -67,19 +67,29 @@
   width: 80%;
   border: 2px solid rgba(0, 0, 0, 0.556);
 }
-button {
+.Submit button {
   text-decoration: none;
-  background-color: #516cf0;
+  background-color: #516cf0 !important;
   color: white;
-  padding: "4px";
+  padding: 4px;
   border-radius: 2%;
   border: rgb(81, 108, 240);
 }
 
+.Submit :hover{
+  background-color: #fd911e !important;
+}
+.charCount{
+  font-size: 16px;
+  color: #9797ac;
+  padding-left: 76%;
+}
 @media (max-width: 768px) {
   .questionSection_wrapper {
-    margin-top: 14%;
-  }
+
+  margin-top: 14%;
+  
+}
   .title__wrapper {
     padding: 3% 8%;
   }
@@ -104,8 +114,10 @@ button {
     width: 96%;
   }
 }
-@media (max-width: 426px) {
-  .questionSection_wrapper {
-    margin-top: 34%;
-  }
+@media (max-width: 426px){
+.questionSection_wrapper {
+
+  margin-top:34%;
+  
+}  
 }

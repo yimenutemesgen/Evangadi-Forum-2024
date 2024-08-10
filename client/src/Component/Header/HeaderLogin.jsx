@@ -14,7 +14,7 @@ const Header = () => {
   
   
   // Determine the home link based on user authentication
-  const homeLink = state?.User?.username ? "/" : "/landing";
+  const homeLink = state?.User?.Username ? "/" : "/landing";
  
  
   console.log(state.user);

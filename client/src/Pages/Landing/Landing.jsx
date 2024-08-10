@@ -11,6 +11,7 @@ import GridLoader from "react-spinners/GridLoader";
 
 const Landing = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [{ user }] = useContext(DataContext);
@@ -23,10 +24,9 @@ const Landing = () => {
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        const response = await axiosBase.get("/question", {
-          params: { search: searchQuery },
-        });
+        const response = await axiosBase.get("/question");
         setData(response.data.questions);
+        setFilteredData(response.data.questions); // Initialize filtered data
       } catch (error) {
         console.error(
           "Error fetching questions:",
@@ -40,7 +40,22 @@ const Landing = () => {
     if (token) {
       fetchQuestions();
     }
-  }, [token, searchQuery]);
+  }, [token]);
+
+  useEffect(() => {
+    // Filter data based on search query
+    if (searchQuery === "") {
+      setFilteredData(data);
+    } else {
+      const lowercasedQuery = searchQuery.toLowerCase();
+      const filtered = data.filter(
+        (question) =>
+          question.title.toLowerCase().includes(lowercasedQuery) ||
+          question.content.toLowerCase().includes(lowercasedQuery)
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchQuery, data]);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -90,7 +105,7 @@ const Landing = () => {
               {loading ? (
                 <GridLoader color="#da7000" />
               ) : (
-                data.map((question, index) => (
+                filteredData.map((question, index) => (
                   <Rowlist
                     user_name={question.user_name}
                     title={question.title}
@@ -108,4 +123,3 @@ const Landing = () => {
 };
 
 export default Landing;
-

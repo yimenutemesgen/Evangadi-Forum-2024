@@ -65,7 +65,8 @@ body {
 
 /* Outer Wrapper */
 .outer__Wrapper {
-  box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1); */
+  border-bottom: 1.5px solid #dae0e7;
   width: 92%;
   display: flex;
   margin: 0 20px;
@@ -73,7 +74,9 @@ body {
 }
 
 .outer__Wrapper:hover {
+   box-shadow: 10px 10px 20px rgba(36, 36, 36, 0.5);
   background-color: rgb(251, 247, 247);
+  
   width: 93%;
 }
 
@@ -84,20 +87,20 @@ body {
 }
 
 .right_wrapper p {
-  padding: 3% 5%;
+  padding: 10% 5%;
 }
 
 /* Contact Wrapper */
 .contact__Wrapper {
-  padding-top: 1%;
+  padding-top: 5%;
 }
 
 .contact__Wrapper img {
-  width: 135px;
+  width: 185px;
 }
 
 .contact__Wrapper small {
-  padding-left: 25%;
+  padding-left: 34%;
   color: #103965;
   font-size: 15px;
 }
@@ -125,8 +128,13 @@ form textarea {
 form {
   padding-top: 4%;
 }
-
-button {
+.charCount{
+  font-size: 16px;
+  color: #9797ac;
+  padding-left: 90%;
+}
+.answerSubmit button {
+  background-color: #516cf0 !important;
   padding: 6px 10px;
   border-radius: 3px;
   border: none; 
@@ -135,8 +143,8 @@ button {
   transition: background-color 0.3s; /* Smooth transition for button color */
 }
 
-button:hover {
-  background-color: #e87c1e; /* Darker shade for hover effect */
+.answerSubmit :hover {
+  background-color: #e87c1e !important; /* Darker shade for hover effect */
 }
 
 /* Responsive Styles */

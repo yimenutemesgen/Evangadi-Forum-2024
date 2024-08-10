@@ -1,4 +1,4 @@
-// db Connection
+
 const dbConnection = require("../db/dbConfig.js");
 // https-status-codes module
 const { StatusCodes } = require("http-status-codes");
@@ -22,7 +22,15 @@ async function postAnswer(req, res) {
       "INSERT INTO answerTable (answer, userid, questionid) VALUES (?,?,?)",
       [answer, userid, questionid]
     );
-    const answerid = answerResponse.insertId; // Get the auto-generated questionId
+    const answerid = answerResponse.insertId; // Get the auto-generated questionid
+
+    // await dbConnection.query(
+    //   "INSERT INTO answerTable (answer, userid, questionid) VALUES (?,?,?)",
+    //   [answer, userid, questionid]
+    // );
+    // // generate a random number for the answerid
+    // const answerid = Math.floor(Math.random() * 1000000000);
+
     // Created (201) (successful) response if the question is successfully inserted
     return res.status(StatusCodes.CREATED).json({
       message: "Answer posted successfully",
@@ -40,8 +48,8 @@ async function postAnswer(req, res) {
 /************************************************************************************** */
 /******************************FETCH ANSWERS*********************************************/
 /**************************************************************************************/
-async function getAnswer(req, res) {
-const { question_id } = req.params;
+async function fetchAnswer(req, res) {
+  const { question_id } = req.params;
   if (!question_id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       error: "Not Found",
@@ -71,4 +79,4 @@ const { question_id } = req.params;
   }
 }
 
-module.exports = { postAnswer, getAnswer };
+module.exports = { postAnswer, fetchAnswer };

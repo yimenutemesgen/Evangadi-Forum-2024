@@ -1,4 +1,3 @@
-import Layout from "../../Component/Layout/LoginLayout";
 import Footer from "../../Component/Footer/Footer";
 import { Link } from "react-router-dom";
 import React from "react";

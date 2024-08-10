@@ -10,6 +10,13 @@
       padding: 60px 0 40px 0;
     background-color: #3b455a;
 }
+/* .footer__container {
+  background-color: #3b455a;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 60px;
+} */
 
 .footer__brand > img {
   width: 200px;

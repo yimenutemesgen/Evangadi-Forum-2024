@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300&display=swap");
-
+button{
+  border: none;
+}
 .section__wrapper {
     width: 100%;
     box-shadow: 0 2px 4px rgba(81, 107, 152, 0.16);
@@ -55,7 +57,9 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
-
+button:hover {
+    background-color:transparent !important;
+}
 /* Responsive styling for small screens */
 @media (max-width: 768px) {
   .menuButton {
@@ -103,14 +107,14 @@
   }
 }
 .login_wrapper{
-  border: 1px solid none;
+  border: 1px solid #596DE5;
   background-color: #596DE5;
   padding: 5px 25px;
   border-radius: 6%;
 }
 .login_wrapper a{
   text-decoration: none;
-  color: white;
+  color: white !important;
 }
 .login_wrapper:hover{
   background-color: #fd911e;
@@ -120,4 +124,22 @@
   .menuItems.open {
     width: 83%;
   }
+}
+.logoutButton button{
+  color: white;
+  background-color: transparent;
+  border: #516cf0;
+}
+.logoutButton{
+   border: 1px solid #596DE5;
+  background-color: #596DE5;
+  padding: 5px 25px;
+  border-radius: 6%;
+    
+}
+.logoutButton:hover{
+  background-color: #fd911e !important;
+}
+.logoutButton button:hover{
+  background-color: #fd911e !important;
 }

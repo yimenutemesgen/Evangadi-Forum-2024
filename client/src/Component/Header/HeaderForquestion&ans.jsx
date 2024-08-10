@@ -50,13 +50,11 @@ const Header = () => {
             >
               How it works
             </Link>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className={classes.logoutButton}
-            >
-              LOG OUT
-            </button>
+            <div className={classes.logoutButton}>
+              <button type="button" onClick={handleLogout}>
+                LOG OUT
+              </button>
+            </div>
           </div>
         </div>
       </div>

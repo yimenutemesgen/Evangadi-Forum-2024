@@ -1,6 +1,6 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { DataContext } from "../../Component/DataProvider/DataProvider";
-import {axiosBase} from "../../Api/axiosConfig";
+import { axiosBase } from "../../Api/axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./style.module.css";
 import Layout from "../../Component/Layout/LayoutForquestion&ans";
@@ -8,6 +8,7 @@ import Layout from "../../Component/Layout/LayoutForquestion&ans";
 function Question1() {
   const [state] = useContext(DataContext);
   const [success, setSuccess] = useState(false);
+  const [questionLength, setQuestionLength] = useState(0); // State for character count
   const user = state.user;
   const titleDome = useRef(null);
   const questionDome = useRef(null);
@@ -43,20 +44,13 @@ function Question1() {
     }
 
     try {
-      const result = await axiosBase.post(
-        "/question",
-        {
-          title,
-          description: question,
-        },
-        {
-          // headers: {
-          //   Authorization: `Bearer ${state.token}`, // Use token from state
-          // },
-        }
-      );
+      const result = await axiosBase.post("/question", {
+        title,
+        description: question,
+      });
       console.log(result);
       setSuccess(true);
+
 
       // Handle successful post
       // Redirect to home page
@@ -67,6 +61,10 @@ function Question1() {
       alert(error?.response?.data?.msg || "An error occurred.");
       console.log(error.response?.data || error);
     }
+  };
+
+  const handleQuestionChange = (e) => {
+    setQuestionLength(e.target.value.length);
   };
 
   return (
@@ -87,7 +85,7 @@ function Question1() {
           <h1>Post Your Question</h1>
           <form onSubmit={postQuestion}>
             {success && (
-              <p style={{ color: "green" ,fontSize:"18px"}}>
+              <p style={{ color: "green", fontSize: "18px" }}>
                 Question Posted Successfully. Redirecting to home page...
               </p>
             )}
@@ -101,11 +99,15 @@ function Question1() {
                 rows="4"
                 cols="50"
                 placeholder="Question detail"
+                onChange={handleQuestionChange} // Update character count on change
               />
               <br />
+              <span className={classes.charCount}>{questionLength}/200</span>
             </div>
             <br />
-            <button type="submit">Post Question</button>
+            <div className={classes.Submit}>
+              <button type="submit">Post Question</button>
+            </div>
           </form>
         </div>
       </section>

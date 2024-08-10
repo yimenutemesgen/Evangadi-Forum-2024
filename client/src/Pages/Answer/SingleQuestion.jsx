@@ -16,6 +16,7 @@ const SingleQuestion = () => {
   const [question, setQuestion] = useState(null);
   const [success, setSuccess] = useState(false);
   const [messageTimeout, setMessageTimeout] = useState(null);
+  const [answerLength, setAnswerLength] = useState(0); // State for character count
   const answerDome = useRef();
 
   // Fetch question and answers
@@ -69,7 +70,7 @@ const SingleQuestion = () => {
         question_id: result.data.question_id,
         answer_id: result.data.answerId,
         content: answerContent,
-        user_name: state.user.username,
+        user_name: state.user.Username,
         created_at: new Date().toISOString(),
       };
 
@@ -88,6 +89,11 @@ const SingleQuestion = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Handle textarea input change to update character count
+  const handleAnswerChange = (e) => {
+    setAnswerLength(e.target.value.length);
   };
 
   // Cleanup timeout on component unmount
@@ -122,11 +128,12 @@ const SingleQuestion = () => {
 
             <div className={classes.answerWrapper}>
               <h1>Answers From The Community</h1>
-              {state?.answers?.map((answer) => (
+              {state?.answers?.map((answer,i) => (
                 <Answer
-                  key={answer.answer_id}
+                  key={i}
                   answer={answer.content}
                   user_name={answer.user_name}
+                 
                 />
               ))}
 
@@ -142,9 +149,14 @@ const SingleQuestion = () => {
                   rows="4"
                   cols="50"
                   placeholder="Your answer..."
+                  onChange={handleAnswerChange} // Update character count on change
                 />
                 <br />
-                <button type="submit">Post Answer</button>
+                <div className={classes.charCount}>{answerLength}/200</div>
+                <br />
+                <div className={classes.answerSubmit}>
+                  <button type="submit">Post Answer</button>
+                </div>
               </form>
             </div>
           </>

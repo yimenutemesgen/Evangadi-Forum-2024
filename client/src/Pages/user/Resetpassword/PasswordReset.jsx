@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { ClipLoader } from "react-spinners";
 import { axiosBase } from "../../../Api/axiosConfig";
@@ -10,12 +9,13 @@ const PasswordReset = ({ onSwitch }) => {
     const [isLoading, setLoading] = useState(false);
     const emailRef = useRef(null);
 const[error1,setError]=useState(null)
+
     async function handleReset(e) {
       e.preventDefault();
       const emailValue = emailRef.current.value;
 
       if (!emailValue) {
-        emailRef.current.style.border = "1px solid red";
+        emailRef.current.style.backgroundColor = "pink";
         return;
       }
 
@@ -26,7 +26,7 @@ const[error1,setError]=useState(null)
         setSuccess(true);
       } catch (error) {
         console.error("Something went wrong:", error);
-setError(error.response?.data?.msg);
+setError(error.response?.data?.message);
       } finally {
         setLoading(false);
       }
@@ -65,12 +65,14 @@ console.log(error1);
             further instructions.
           </p>
         </div>
-        {error1 && <h6 style={{color:"red"}}> No account found with this email</h6>}
+        {error1 && (
+          <h6 style={{ color: "red" }}> No account found with this email</h6>
+        )}
         <div className={classes.email_Wrapper}>
           <input ref={emailRef} type="email" placeholder="Email" />
         </div>
-        <div>
-          <button type="submit" className={classes.signUp__btn}>
+        <div className={classes.reset_button}>
+          <button type="submit">
             {isLoading ? (
               <ClipLoader color="#000" size={15} />
             ) : (
