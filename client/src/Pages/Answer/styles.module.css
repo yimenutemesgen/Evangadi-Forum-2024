@@ -148,10 +148,10 @@ form {
 }
 
 /* Responsive Styles */
-@media (max-width: 426px){
+@media (max-width: 767px){
  
  .outerSection_Wrapper{
-    margin: 35% 3%;
+    margin: 29% 3%;
     overflow-x: hidden;
 }
   .icon_wrapper{display: none;

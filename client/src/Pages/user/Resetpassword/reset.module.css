@@ -97,28 +97,15 @@
       color:white;
     }
 
-@media (max-width: 426px) {
-  .signUp__form {
-    width: 274px;
-    height: 477px;
-  }
+@media (max-width: 768px) {
+
 .email_Wrapper input{
- padding: 3% 18% 3% 3%;
+width: 100%;
 }
-  .button_wrapper {
-       padding: 3% 10% 3% 5.5% !important;
-  }
-  .reset__password h6 {
-    font-size: 19px;
-  }
-  .reset__password p {
-    font-size: 14px;
-  }
-  .lastContainer_wrapper {
-    padding: 5% 9% 0 0;
-    font-size: 14px;
-  }
- .signUp__btn {
-    height: 41px;
-}
+  
+.reset_button{
+  width: 100%;
+  height: 43px;
+  padding-top: 9.75px;
+} 
 }

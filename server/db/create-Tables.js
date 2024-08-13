@@ -1,4 +1,3 @@
-
 /******************************create-Tables.js*********************************************/
 // const express = require("express");
 // const route = express.Router();
@@ -107,7 +106,7 @@ route.get("/", async (req, res) => {
   const questionTable = `CREATE TABLE IF NOT EXISTS questionTable (
     questionid VARCHAR(200) NOT NULL UNIQUE,
     userid INT(20) NOT NULL,
-    title VARCHAR(50) NOT NULL,
+    title VARCHAR(50) NOT NULL, 
     description VARCHAR(200) NOT NULL,
     tag VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

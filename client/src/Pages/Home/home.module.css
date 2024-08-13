@@ -110,7 +110,7 @@ nav ul li a {
   background-color: white;
   height: 10px;
 }
-@media (max-width: 426px) {
+@media (max-width: 768px) {
   .content{
     margin-top: 60%;}
    .feature_img {

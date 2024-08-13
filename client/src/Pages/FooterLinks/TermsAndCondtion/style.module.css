@@ -43,3 +43,19 @@ font-size: 18px;
   font-size: 16px;
  
 }
+
+
+@media (max-width: 767px){
+.outer_container_wrapper{
+  padding-top: 32%;
+ } 
+ .outer_container_wrapper h1{
+  font-size: 23px;
+ }
+ .discription_Wrapper{
+  padding-top: 15px;
+ }
+ .discription_Wrapper h2{
+  font-size: 16px;
+ }
+}

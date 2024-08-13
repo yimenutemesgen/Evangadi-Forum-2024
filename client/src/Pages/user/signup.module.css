@@ -177,7 +177,7 @@
 }
 /* .error{background-color: pink;} */
 .email_Wrapper input {
-  padding: 3% 56% 3% 3%;
+  padding: 3% 57.5% 3% 3%;
   border: 0.2px solid rgb(183, 181, 181);
   border-radius: 3px;
   background-color: #e8f0fe;
@@ -231,16 +231,16 @@
   text-decoration: none;
   color: white;
 }
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .login__about {
     display: none;
   }
 }
-@media (max-width: 426px) {
+@media (max-width: 768px) {
   .signup__form {
-    width: 265px;
-    height: 487px;
-    padding: 21px;
+    width: 85%;
+    height: 548px;
+    padding: 40px;
   }
 
   .password_Wrapper {
@@ -249,6 +249,7 @@
     padding-top: 3%;
     padding: 1.5% 0 3.5%;
     color: #da7000;
+
   }
 
   .email_Wrapper input {
@@ -256,6 +257,7 @@
     border: 0.2px solid rgb(183, 181, 181);
     border-radius: 3px;
     background-color: #e8f0fe;
+    width: 100%;
   }
   .LoginWrapper {
     padding: 3% 42%;
@@ -265,6 +267,8 @@
     border: 0.2px solid rgb(183, 181, 181);
     border-radius: 3px;
     background-color: #e8f0fe;
+    width: 100%;
+    height: 20%;
   }
   .firstLast_names {
     gap: 0;
@@ -272,11 +276,8 @@
   }
 
   .signup__input {
-    width: 217px;
+    width: 100%;
     height: 41px;
-  }
-  .firstlast_names > input {
-    width: 217px;
   }
   .signup__btn {
     font-size: 16px;

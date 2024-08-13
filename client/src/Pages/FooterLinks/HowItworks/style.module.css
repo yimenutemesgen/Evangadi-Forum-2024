@@ -47,3 +47,15 @@
   color: #344767;
   font-size: 16px;
 }
+
+@media (max-width: 767px){
+ .outer_container_wrapper{
+  padding-top: 30%;
+ } 
+ .outer_container_wrapper h1{
+  font-size: 36px;
+ }
+ .discription_Wrapper{
+  padding-top: 19px;
+ }
+}
