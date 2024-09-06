@@ -1,41 +1,31 @@
-const express=require("express")
-const routes=express.Router()
-//user controllers
+
+
+
+
+
+
+const express = require("express");
+const routes = express.Router();
+// User controllers
 const {
   register,
   login,
   checkUser,
   resetPassword,
 } = require("../controller/useController");
-//Authentication middleware 
+// Authentication middleware
 const authMiddleware = require("../middleware/authMiddleware");
 
+// Register user
+routes.post("/register", register);
 
-/************************************************************************************** */
-/******************************register routes*********************************************/
-/************************************************************************************** */
-
-
-routes.post("/register",register);
-
-/************************************************************************************** */
-/******************************Login user*********************************************/
-/************************************************************************************** */
-
+// Login user
 routes.post("/login", login);
 
-/************************************************************************************** */
-/******************************check user*********************************************/
-/************************************************************************************** */
-routes.get("/check", authMiddleware, checkUser, resetPassword);
+// Check user authentication (protected route)
+routes.get("/check", authMiddleware, checkUser);
 
+// Initiate password reset
+routes.post("/password-reset", resetPassword);
 
-/************************************************************************************** */
-/******************************PasswordReset routes*********************************************/
-/************************************************************************************** */
-
-routes.post("/password-reset",resetPassword);
-
-
-
-module.exports=routes
+module.exports = routes;

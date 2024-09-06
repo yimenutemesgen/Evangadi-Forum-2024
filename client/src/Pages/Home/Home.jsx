@@ -1,6 +1,5 @@
 import Footer from "../../Component/Footer/Footer";
 import { Link } from "react-router-dom";
-import React from "react";
 import classes from "./home.module.css";
 import logo from "../../Asset/image/evangadi-logo-home.png";
 import img from "../../Asset/image/newpic.jpg";

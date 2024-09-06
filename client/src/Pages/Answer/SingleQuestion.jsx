@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+
+
+
+
+
+import { useContext, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../../Component/Layout/LayoutForquestion&ans";
 import { DataContext } from "../../Component/DataProvider/DataProvider";
@@ -17,6 +22,7 @@ const SingleQuestion = () => {
   const [success, setSuccess] = useState(false);
   const [messageTimeout, setMessageTimeout] = useState(null);
   const [answerLength, setAnswerLength] = useState(0); // State for character count
+  const [error, setError] = useState(""); // State for error messages
   const answerDome = useRef();
 
   // Fetch question and answers
@@ -56,7 +62,13 @@ const SingleQuestion = () => {
     const answerContent = answerDome.current.value.trim();
 
     if (!answerContent) {
+      setError("Answer cannot be empty");
       answerDome.current.style.backgroundColor = "#f8d7da"; // Set background color for error
+      return;
+    }
+
+    if (answerContent.length > 200) {
+      setError("Answer cannot exceed 200 characters");
       return;
     }
 
@@ -78,6 +90,7 @@ const SingleQuestion = () => {
       answerDome.current.value = "";
       answerDome.current.style.backgroundColor = ""; // Reset background color
       setSuccess(true);
+      setError("");
 
       if (messageTimeout) clearTimeout(messageTimeout);
       setMessageTimeout(setTimeout(() => setSuccess(false), 2000));
@@ -86,6 +99,7 @@ const SingleQuestion = () => {
         "Error posting answer:",
         error.response?.data || error.message
       );
+      setError("Failed to post answer");
     } finally {
       setLoading(false);
     }
@@ -128,12 +142,11 @@ const SingleQuestion = () => {
 
             <div className={classes.answerWrapper}>
               <h1>Answers From The Community</h1>
-              {state?.answers?.map((answer,i) => (
+              {state?.answers?.map((answer, i) => (
                 <Answer
                   key={i}
                   answer={answer.content}
                   user_name={answer.user_name}
-                 
                 />
               ))}
 
@@ -142,6 +155,7 @@ const SingleQuestion = () => {
                   Your answer has been successfully posted
                 </h6>
               )}
+              {error && <h6 style={{ color: "red" }}>{error}</h6>}
 
               <form onSubmit={postAnswer}>
                 <textarea

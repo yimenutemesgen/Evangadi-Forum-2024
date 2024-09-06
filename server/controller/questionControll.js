@@ -1,6 +1,6 @@
-// Import db Connection
+
+
 const dbConnection = require("../db/dbConfig");
-// Import https-status-codes module
 const { StatusCodes } = require("http-status-codes");
 
 // Post new question
@@ -8,7 +8,7 @@ async function postNewQuestion(req, res) {
   const { title, description, tag } = req.body;
   const { userid } = req.user;
 
-  if (!req.body.title || !req.body.description) {
+  if (!title || !description) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       error: "Bad Request",
       message: "Please provide all required fields",
@@ -25,8 +25,7 @@ async function postNewQuestion(req, res) {
     if (existingQuestions.length > 0) {
       return res.status(StatusCodes.CONFLICT).json({
         error: "Conflict",
-        message:
-          "A question with the same title and description already exists.",
+        message: "A question with the same title and description already exists.",
       });
     }
 
@@ -41,7 +40,6 @@ async function postNewQuestion(req, res) {
       [questionid, userid, title, description, tag]
     );
 
-    // Return a 201 created response
     return res.status(StatusCodes.CREATED).json({
       message: "Question created successfully",
       questionid: questionid,
@@ -90,6 +88,7 @@ async function fetchQuestion(req, res) {
 // Get a single question
 async function getSingleQuestion(req, res) {
   const { question_id } = req.params;
+  
   try {
     const [question] = await dbConnection.query(
       "SELECT questionTable.questionid as question_id, questionTable.title, questionTable.description as content, userTable.userid as user_id, questionTable.created_at FROM questionTable JOIN userTable ON questionTable.userid = userTable.userid WHERE questionid = ?",

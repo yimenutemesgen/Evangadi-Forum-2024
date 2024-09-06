@@ -1,173 +1,159 @@
 
-// db Connection
+
+
+
 const dbConnection = require("../db/dbConfig.js");
 const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
-
-/************************************************************************************** */
-/******************************UserRegister*********************************************/
-/************************************************************************************** */
+//User Register
+ 
 async function register(req, res) {
-  const {
-    username,
-    first_name,
-    last_name,
-    email,
-    password
-  } = req.body;
+  const { username, first_name, last_name, email, password } = req.body;
+
   if (!username || !first_name || !last_name || !email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       message: "Please provide all required fields",
     });
   }
+
   try {
-    const [user] = await dbConnection.query(
-      "select username,userid from userTable where username=? or email=?",
+    const [existingUser] = await dbConnection.query(
+      "SELECT username, email FROM userTable WHERE username=? OR email=?",
       [username, email]
     );
-    if (user.length > 0) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "User already existed" });
+
+    if (existingUser.length > 0) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ 
+        message: "User already exists" 
+      });
     }
+
     if (password.length < 8) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         message: "Password must be at least 8 characters",
       });
     }
-    //  encrypt the password
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     await dbConnection.query(
-      "INSERT INTO userTable(username, first_name, last_name, email, password) VALUES(?,?,?,?,?)",
-      [
-        username,
-        first_name,
-        last_name,
-        email,
-        hashedPassword,
-      ]
+      "INSERT INTO userTable (username, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)",
+      [username, first_name, last_name, email, hashedPassword]
     );
-    return res
-      .status(StatusCodes.CREATED)
-      .json({ message: "User registered successfully" });
+
+    return res.status(StatusCodes.CREATED).json({ 
+      message: "User registered successfully" 
+    });
   } catch (error) {
-    console.log(error.message);
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "An unexpected error occurred." });
+    console.error("Registration error:", error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "An unexpected error occurred.",
+    });
   }
 }
 
-/************************************************************************************** */
-/******************************Login user*********************************************/
-/************************************************************************************** */
+//Login User
 async function login(req, res) {
   const { email, password } = req.body;
+
   if (!email || !password) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "Please provide all required fields" });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "Please provide all required fields",
+    });
   }
+
   try {
     const [user] = await dbConnection.query(
-      "SELECT username,userid,password FROM userTable WHERE email=?",
+      "SELECT username, userid, password FROM userTable WHERE email=?",
       [email]
     );
-    console.log(user);
+
     if (user.length === 0) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Please provide all required fields" });
-    }
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user[0].password);
-    if (!isMatch) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "invalid credential!" });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Invalid credentials",
+      });
     }
 
-    const username = user[0].username;
-    const userid = user[0].userid;
-    const token = jwt.sign({ username, userid }, process.env.JWT_SECRET, {
+    const isMatch = await bcrypt.compare(password, user[0].password);
+
+    if (!isMatch) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "Invalid credentials",
+      });
+    }
+
+    const token = jwt.sign({ username: user[0].username, userid: user[0].userid }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "User login successfully", token, username });
+
+    return res.status(StatusCodes.OK).json({ 
+      message: "User logged in successfully", 
+      token, 
+      username: user[0].username 
+    });
   } catch (error) {
-    console.log(error.message);
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "An unexpected error occurred." });
+    console.error("Login error:", error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "An unexpected error occurred.",
+    });
   }
 }
 
-/************************************************************************************** */
-/******************************check user's authentication*******************************/
-/************************************************************************************** */
+//Check User Authentication
 async function checkUser(req, res) {
   try {
-    const username = req.user.username;
-    const userid = req.user.userid;
-    // const { username, userid } = req.user;
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "Valid user", username, userid });
+    const { username, userid } = req.user;
+    return res.status(StatusCodes.OK).json({ 
+      message: "Valid user", 
+      username, 
+      userid 
+    });
   } catch (error) {
-    console.log(error.message);
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "Authentication invalid" });
+    console.error("Authentication check error:", error.message);
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      message: "Authentication invalid",
+    });
   }
 }
 
-/************************************************************************************** */
-/******************************resetPassword*********************************************/
-/************************************************************************************** */
+// reset password
 async function resetPassword(req, res) {
   const { email } = req.body;
+
   if (!email) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "Please provide an email address" });
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "Please provide an email address",
+    });
   }
 
   try {
-    // Check if the user exists
     const [user] = await dbConnection.query(
       "SELECT userid, username FROM userTable WHERE email=?",
       [email]
     );
 
     if (user.length === 0) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "No account found with this email" });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "No account found with this email",
+      });
     }
 
     const { userid, username } = user[0];
-
-    // Generate a token
     const token = jwt.sign({ username, userid }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    // Set the expiration timestamp (1 hour from now)
-    const expiration = Date.now() + 3600000; // 1 hour in milliseconds
+    const expiration = Date.now() + 3600000; // 1 hour
 
-    // Store the token and expiration in the database
     await dbConnection.query(
       "UPDATE userTable SET resetToken=?, resetTokenExpiry=? WHERE email=?",
       [token, expiration, email]
     );
 
-    // Create a transporter for sending emails
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
@@ -175,27 +161,25 @@ async function resetPassword(req, res) {
         pass: process.env.APP_PASSWORD,
       },
       logger: true, // Enable logging
-      debug: true,
+      debug: true,  // Enable debug mode
     });
 
-    // Create the reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
-    // Send the reset email
     await transporter.sendMail({
       to: email,
       subject: "Password Reset Request",
       html: `<p>You requested a password reset. Click <a href="${resetLink}">here</a> to reset your password. The link will expire in 1 hour.</p>`,
     });
 
-    res
-      .status(StatusCodes.OK)
-      .json({ message: "Password reset instructions sent to your email" });
+    return res.status(StatusCodes.OK).json({
+      message: "Password reset instructions sent to your email",
+    });
   } catch (error) {
-    console.log(error.message);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Something went wrong, try again later!" });
+    console.error("Password reset error:", error.message);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "Something went wrong, try again later!",
+    });
   }
 }
 

@@ -1,7 +1,11 @@
-import React, { useRef, useState, useContext } from "react";
+
+
+
+
+import { useRef, useState, useContext } from "react";
 import { DataContext } from "../../Component/DataProvider/DataProvider";
 import { axiosBase } from "../../Api/axiosConfig";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import classes from "./style.module.css";
 import Layout from "../../Component/Layout/LayoutForquestion&ans";
 
@@ -9,6 +13,7 @@ function Question1() {
   const [state] = useContext(DataContext);
   const [success, setSuccess] = useState(false);
   const [questionLength, setQuestionLength] = useState(0); // State for character count
+  const [errors, setErrors] = useState({ title: "", question: "" }); // Error states
   const user = state.user;
   const titleDome = useRef(null);
   const questionDome = useRef(null);
@@ -16,26 +21,43 @@ function Question1() {
 
   const postQuestion = async (e) => {
     e.preventDefault();
-    const title = titleDome.current.value;
-    const question = questionDome.current.value;
+    const title = titleDome.current.value.trim();
+    const question = questionDome.current.value.trim();
 
-    // Reset styles
+    // Reset error states and styles
+    setErrors({ title: "", question: "" });
     titleDome.current.style.border = "1px solid #ccc";
-    titleDome.current.style.backgroundColor = "#fff";
     questionDome.current.style.border = "1px solid #ccc";
+    titleDome.current.style.backgroundColor = "#fff";
     questionDome.current.style.backgroundColor = "#fff";
 
     let hasError = false;
 
-    if (!title.trim()) {
+    if (!title) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        title: "Title is required",
+      }));
       titleDome.current.style.border = "1px solid red";
       titleDome.current.style.backgroundColor = "pink";
       hasError = true;
     }
 
-    if (!question.trim()) {
+    if (!question) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        question: "Question detail is required",
+      }));
       questionDome.current.style.border = "1px solid red";
       questionDome.current.style.backgroundColor = "pink";
+      hasError = true;
+    }
+
+    if (questionLength > 200) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        question: "Question detail cannot exceed 200 characters",
+      }));
       hasError = true;
     }
 
@@ -51,8 +73,12 @@ function Question1() {
       console.log(result);
       setSuccess(true);
 
-
       // Handle successful post
+      // Reset form fields
+      titleDome.current.value = "";
+      questionDome.current.value = "";
+      setQuestionLength(0);
+
       // Redirect to home page
       setTimeout(() => {
         navigate("/landing");
@@ -90,7 +116,16 @@ function Question1() {
               </p>
             )}
             <div>
-              <input ref={titleDome} type="text" placeholder="Question title" />
+              <input
+                ref={titleDome}
+                type="text"
+                placeholder="Question title"
+                style={{
+                  borderColor: errors.title ? "red" : "#ccc",
+                  backgroundColor: errors.title ? "pink" : "#fff",
+                }}
+              />
+              {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
             </div>
             <br />
             <div>
@@ -100,9 +135,16 @@ function Question1() {
                 cols="50"
                 placeholder="Question detail"
                 onChange={handleQuestionChange} // Update character count on change
+                style={{
+                  borderColor: errors.question ? "red" : "#ccc",
+                  backgroundColor: errors.question ? "pink" : "#fff",
+                }}
               />
               <br />
               <span className={classes.charCount}>{questionLength}/200</span>
+              {errors.question && (
+                <p style={{ color: "red" }}>{errors.question}</p>
+              )}
             </div>
             <br />
             <div className={classes.Submit}>
@@ -116,3 +158,4 @@ function Question1() {
 }
 
 export default Question1;
+

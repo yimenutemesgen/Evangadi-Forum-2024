@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import  { useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Landing from "./Pages/Landing/Landing";
 import Login from "./Pages/user/Login";
